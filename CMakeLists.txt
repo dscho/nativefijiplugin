@@ -1,8 +1,10 @@
 #required cmake 2.8.6 for Generate_export_header function
 cmake_minimum_required ( VERSION 2.8.6 )
 
-project(HelloWorldProject)
+project(NativeFijiPlugin)
 
+#TODO check if win32 or x64 and set the output directory accordingly
+#(LibraryLoader.java expects a win32 and x64 version of the library)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG 	./Debug/win64)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE 	./Release/win64)
 
