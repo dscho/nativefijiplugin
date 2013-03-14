@@ -8,14 +8,14 @@ Execute(typename itk::Image<TInputPixel,VDimension>::Pointer inputImage)
     // Define the dimension of the images
     const unsigned int Dimension = VDimension;
 
-    typedef itk::Image<TInputPixel, Dimension> ImageType;
+    typedef typename itk::Image<TInputPixel, Dimension> ImageType;
 
     //doSomething here
     Canny cannyFilter;
 
     inputImage->Update();
 
-	  ImageType::Pointer outputImage;
+    typename ImageType::Pointer outputImage;
     cannyFilter.filterImage(inputImage, outputImage);
 
     return outputImage;
@@ -27,13 +27,13 @@ Copy(typename itk::Image<TInputPixel,VDimension>::Pointer inputImage)
 {
 
   typedef itk::Image<TInputPixel, VDimension> ImageType;
-	typedef typename itk::ImageDuplicator< ImageType > DuplicatorType;
-	typename DuplicatorType::Pointer duplicator = DuplicatorType::New();
-	duplicator->SetInputImage(inputImage);
-	duplicator->Update();
-	GrayImageType::Pointer imageOut = duplicator->GetOutput();
+  typedef typename itk::ImageDuplicator< ImageType > DuplicatorType;
+  typename DuplicatorType::Pointer duplicator = DuplicatorType::New();
+  duplicator->SetInputImage(inputImage);
+  duplicator->Update();
+  typename ImageType::Pointer imageOut = duplicator->GetOutput();
 
-	return imageOut;
+  return imageOut;
 
 }
 
@@ -47,9 +47,8 @@ JNIEXPORT void JNICALL Java_ch_epfl_cvlab_nativePlugin_NativeWrapper_sayHello
 
 JNIEXPORT jint JNICALL Java_ch_epfl_cvlab_nativePlugin_NativeWrapper_trainNative
   (JNIEnv *env, jobject ignored, jbyteArray jimageIn, jint width, jint height, jint numSlices, jboolean isColorImage,
-		  jdouble widthpix, jdouble heightpix, jdouble depthpix){
-
-	return 0;
+                jdouble widthpix, jdouble heightpix, jdouble depthpix){
+  return 0;
 }
 
 JNIEXPORT jint JNICALL Java_ch_epfl_cvlab_nativePlugin_NativeWrapper_runNative
@@ -95,18 +94,18 @@ JNIEXPORT jint JNICALL Java_ch_epfl_cvlab_nativePlugin_NativeWrapper_runNative
 
   //Copy result to byte []
   Iterator itOut(imageOut,region);
-	itOut.GoToBegin();
-	for(int i=0; !itOut.IsAtEnd(); ++i, ++itOut)
-	{
-		jimageOutBytePtr[i] = itOut.Value();
-	}
-
-	//Inform VM to Copy back the content and free the BytePtr
-	//http://docs.oracle.com/javase/1.5.0/docs/guide/jni/spec/functions.html#wp17314
-	env->ReleaseByteArrayElements(jimageIn, jimageInBytePtr,0);
-	env->ReleaseByteArrayElements(jimageOut, jimageOutBytePtr,0);
-
-	return 0;
+  itOut.GoToBegin();
+  for(int i=0; !itOut.IsAtEnd(); ++i, ++itOut)
+  {
+    jimageOutBytePtr[i] = itOut.Value();
+  }
+ 
+  //Inform VM to Copy back the content and free the BytePtr
+  //http://docs.oracle.com/javase/1.5.0/docs/guide/jni/spec/functions.html#wp17314
+  env->ReleaseByteArrayElements(jimageIn, jimageInBytePtr,0);
+  env->ReleaseByteArrayElements(jimageOut, jimageOutBytePtr,0);
+  
+  return 0;
 
 }
 
