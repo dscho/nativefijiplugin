@@ -24,6 +24,8 @@ set fijijars=C:\Users\monso\code\fiji64\Fiji.app\jars
 
 %java_compiler% -cp %fijijars%\*;.;lib -d build %java_src_root%/Native_Plugin.java %java_src_root%/NativeWrapper.java
 
+%java_home%\javah.exe -jni -d include/jniheaders -classpath %fijijars%\*;build/ ch.epfl.cvlab.nativePlugin.NativeWrapper
+
 ::for some reason, fiji expects the plugins config to be named plugins.config otherwise is not recognized by fiji
 copy pluginMenuName\NativePlugin.config build\plugins.config
 
