@@ -14,9 +14,18 @@ public class GUI implements MouseListener, MouseMotionListener{
     private GenericDialog dialog;
     Calibration calib;
     ImageCanvas imagecanvas;
+    
+    static String title = "blobs";
+    static int param1 = 4;
+    static double param2 = 10.3;
 
     public GUI(ImagePlus image){
-        dialog = new GenericDialog("Train/Run");
+        //TODO write a proper GUI, with parameters that are actually passed through the filters
+        dialog = new GenericDialog("Train/Run temporary dialog");
+        dialog.addStringField("Example File name (inactive): ", title);
+        dialog.addNumericField("ExampleParameter1 (inactive): ", param1, 0);
+        dialog.addNumericField("ExampleParameter2 (inactive): ", param2, 0);
+        dialog.addMessage("Hit Ok to run the Filter");
         
         ImageCanvas imagecanvas = image.getCanvas();
         imagecanvas.addMouseListener(this);

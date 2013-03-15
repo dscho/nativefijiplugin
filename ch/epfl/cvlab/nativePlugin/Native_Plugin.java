@@ -22,6 +22,7 @@ public class Native_Plugin implements PlugIn {
             imgHandler.getImages();
             
             gui = new GUI(imgHandler.getSampleImage());
+            
             gui.show();
             
             ImagePlus imageOut = null;
@@ -36,8 +37,6 @@ public class Native_Plugin implements PlugIn {
             gui.showImage(imageOut);
             
             if( gui.wasCanceled() ) return;
-            
-            IJ.showMessage("Job's Done");
             
         } catch(ImageNotFoundException exp){
             IJ.error(exp.getMessage() + ": " + exp.toString());

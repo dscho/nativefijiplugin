@@ -54,10 +54,11 @@ endif(ITK_FOUND)
 # use javah_interface.cmd to create the headers
 #--------------------#
 
+#C:/Program\ Files\ (x86)/Java/jdk1.7.0_17/include/
+#C:/Program\ Files\ (x86)/Java/jdk1.7.0_17/include/win32/
+
 #Core cvlab code
-include_directories( C:/Program\ Files\ (x86)/Java/jdk1.7.0_17/include/
-                     C:/Program\ Files\ (x86)/Java/jdk1.7.0_17/include/win32/
-                     ${JNI_INCLUDE_DIRS}
+include_directories( ${JNI_INCLUDE_DIRS}
                      include/
                      include/jniheaders/)
 
