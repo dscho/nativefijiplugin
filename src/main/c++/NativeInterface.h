@@ -14,11 +14,10 @@
 
 #include "itkImageDuplicator.h"
 
-#include "NativePlugin_Export.h"
 
 #include "Canny.h"
 
-class NativePlugin_EXPORT NativeInterface {
+class JNIEXPORT NativeInterface {
 
   public:
 
