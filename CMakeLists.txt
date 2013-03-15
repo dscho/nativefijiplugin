@@ -32,7 +32,7 @@ endif(WIN32)
 find_package(ITK REQUIRED)
 if(ITK_FOUND)
     include(${ITK_USE_FILE})
-    message(STATUS "itk found: use file is " ${ITK_USE_FILE} " and include " ${ITK_INCLUDE_DIRS})
+    message(STATUS "itk found")
 endif(ITK_FOUND)
 #--------------------------------------#
 
@@ -42,10 +42,11 @@ endif(ITK_FOUND)
 # use javah_interface.cmd to create the headers
 #--------------------#
 
+#C:/Program\ Files\ (x86)/Java/jdk1.7.0_17/include/
+#C:/Program\ Files\ (x86)/Java/jdk1.7.0_17/include/win32/
+
 #Core cvlab code
-include_directories( C:/Program\ Files\ (x86)/Java/jdk1.7.0_17/include/
-                     C:/Program\ Files\ (x86)/Java/jdk1.7.0_17/include/win32/
-                     ${JNI_INCLUDE_DIRS}
+include_directories( ${JNI_INCLUDE_DIRS}
                      include/
                      include/jniheaders/)
 
