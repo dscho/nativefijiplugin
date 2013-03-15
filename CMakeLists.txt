@@ -5,8 +5,16 @@ project(NativeFijiPlugin)
 
 #TODO check if win32 or x64 and set the output directory accordingly
 #(LibraryLoader.java expects a win32 and x64 version of the library)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG 	./Debug/win64)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE 	./Release/win64)
+if(WIN32)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG 	./Debug/win64)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE 	./Release/win64)
+elseif(UNIX)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG 	./Debug/linux64)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE 	./Release/linux64)
+elseif(APPLE)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG 	./Debug/macosx64)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE 	./Release/macosx64)
+endif
 
 #required to link examples to shared libraries on Windows
 #see http://www.cmake.org/Wiki/BuildingWinDLL
