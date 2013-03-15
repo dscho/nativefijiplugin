@@ -28,11 +28,15 @@ if(WIN32)
     add_definitions(-D_OPENMP -DLIBFFTWF33_EXPORTS) # Visual Studio 2005 and up supports OpenMP
 endif(WIN32)
 
+if(UNIX)
+    SET(CMAKE_CXX_FLAGS "-Wall -O3 -fopenmp")
+endif(UNIX)
+
 #-----------ITK Libraries--------------#
 find_package(ITK REQUIRED)
 if(ITK_FOUND)
     include(${ITK_USE_FILE})
-    message(STATUS "itk found: use file is " ${ITK_USE_FILE} " and include " ${ITK_INCLUDE_DIRS})
+    message(STATUS "itk found with ITK_DIR = " ${ITK_DIR})
 endif(ITK_FOUND)
 #--------------------------------------#
 
@@ -75,6 +79,6 @@ include_directories(build)
 #target_link_libraries(cannyMe Hello)
 
 #test code of a simple hello world native call
-add_executable(nativeCallTest src/examples/sayHello.cpp)
-target_link_libraries(nativeCallTest NativeWrapper)
+#add_executable(nativeCallTest src/examples/sayHello.cpp)
+#target_link_libraries(nativeCallTest NativeWrapper)
 
