@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>1.28</version>
+	</parent>
+
+	<groupId>ch.epfl.cvlab</groupId>
+	<artifactId>Native_Plugin</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>nar</packaging>
+
+	<name>Native Plugin for ImageJ 1.x</name>
+	<description>A Maven project implementing an ImageJ 1.x plugin with native bindings (hence platform-dependent)</description>
+
+	<properties>
+		<itk.directory>NOT-SET!</itk.directory>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>ij</artifactId>
+			<version>${imagej1.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>ch.epfl.cvlab.nativePlugin.NativeWrapper</mainClass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-nar-plugin</artifactId>
+				<version>${nar.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<cpp>
+						<systemIncludePaths>
+							<systemIncludePath>${itk.directory}/Modules/Core/Common/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/build/Modules/Core/Common/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/Core/Common/include/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/IO/ImageBase/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/build/Modules/IO/ImageBase/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/IO/ImageBase/include/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/ThirdParty/VNL/src/vxl/vcl/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/build/Modules/ThirdParty/VNL/src/vxl/vcl/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/ThirdParty/VNL/src/vxl/core/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/build/Modules/ThirdParty/VNL/src/vxl/core/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/ThirdParty/KWSys/src/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/build/Modules/ThirdParty/KWSys/src/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/Filtering/ImageIntensity/include/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/Filtering/Smoothing/include/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/Filtering/ImageFilterBase/include/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/Filtering/ImageFeature/include/</systemIncludePath>
+							<systemIncludePath>${itk.directory}/Modules/Filtering/ImageGradient/include/</systemIncludePath>
+						</systemIncludePaths>
+					</cpp>
+					<linker>
+						<libs>
+							<lib>
+								<name>ITKCommon-4.4</name>
+								<directory>${itk.directory}/build/lib/</directory>
+							</lib>
+							<lib>
+								<name>itkvnl-4.4</name>
+								<directory>${itk.directory}/build/lib/</directory>
+							</lib>
+
+						</libs>
+					</linker>
+					<libraries>
+						<library>
+							<type>jni</type>
+							<linkCPP>false</linkCPP>
+						</library>
+					</libraries>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<developers>
+		<developer>
+			<id>pol</id>
+			<name>Pol Monso Purti</name>
+			<email>monso@iccvlabsrv16.epfl.ch</email>
+			<organization>CVLab @EPFL</organization>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>dscho</id>
+			<name>Johannes Schindelin</name>
+			<email>johannes.schindelin@gmx.de</email>
+			<url>http://loci.wisc.edu/people/johannes-schindelin</url>
+			<organization>UW-Madison LOCI</organization>
+			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>-6</timezone>
+		</developer>
+	</developers>
+
+	<!-- NB: for project parent -->
+	<repositories>
+		<repository>
+			<id>imagej.releases</id>
+			<url>http://maven.imagej.net/content/repositories/releases</url>
+		</repository>
+		<repository>
+			<id>imagej.snapshots</id>
+			<url>http://maven.imagej.net/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
+
+	<scm>
+		<connection>scm:git:git://github.com/dscho/nativefijiplugin</connection>
+		<developerConnection>scm:git:git@github.com:dscho/nativefijiplugin</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/dscho/nativefijiplugin</url>
+	</scm>
+
+</project>
