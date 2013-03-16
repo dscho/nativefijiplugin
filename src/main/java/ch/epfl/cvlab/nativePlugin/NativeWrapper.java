@@ -1,11 +1,14 @@
 
 package ch.epfl.cvlab.nativePlugin;
 
+import fiji.JNI;
+
 import ij.IJ;
 import ij.ImagePlus;
-import ch.epfl.cvlab.libraryLoader.LibraryLoader;
 
-public class NativeWrapper extends LibraryLoader {
+import org.scijava.util.POM;
+
+public class NativeWrapper {
 
    private native void sayHello();
    private native int trainNative(byte [] imageIn,
@@ -14,6 +17,12 @@ public class NativeWrapper extends LibraryLoader {
    
    private native int runNative(byte [] imageIn, byte [] imageOut,
                   int width, int height, double widthpix, double heightpix);
+
+   {
+      final String version = POM.getPOM(NativeWrapper.class,
+         "ch.epfl.cvlab", "Native_Plugin").getVersion();
+      JNI.loadLibrary("Native_Plugin-" + version);
+   }
 
    public void callSayHello(){
 
